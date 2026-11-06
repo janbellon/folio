@@ -1,0 +1,19 @@
+services:
+  folio:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      MAX_UPLOAD_MB: "100"
+      MAX_FILES: "50"
+      MAX_CONCURRENT_JOBS: "4"
+      JOB_TIMEOUT_SECONDS: "60"
+      MAX_IMAGE_MEGAPIXELS: "100"
+    read_only: true
+    tmpfs:
+      - /tmp:size=1g,mode=1777
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
